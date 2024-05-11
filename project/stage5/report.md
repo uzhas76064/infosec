@@ -1,0 +1,119 @@
+---
+## Front matter
+title: "Этап 5. Использование Burp Suite"
+subtitle: "Использование Burp Suite"
+author: "Хватов Максим"
+
+## Generic otions
+lang: ru-RU
+toc-title: "Содержание"
+
+## Bibliography
+bibliography: bib/cite.bib
+csl: pandoc/csl/gost-r-7-0-5-2008-numeric.csl
+
+## Pdf output format
+toc: true # Table of contents
+toc-depth: 2
+lof: true # List of figures
+lot: true # List of tables
+fontsize: 12pt
+linestretch: 1.5
+papersize: a4
+documentclass: scrreprt
+## I18n polyglossia
+polyglossia-lang:
+  name: russian
+  options:
+	- spelling=modern
+	- babelshorthands=true
+polyglossia-otherlangs:
+  name: english
+## I18n babel
+babel-lang: russian
+babel-otherlangs: english
+## Fonts
+mainfont: PT Serif
+romanfont: PT Serif
+sansfont: PT Sans
+monofont: PT Mono
+mainfontoptions: Ligatures=TeX
+romanfontoptions: Ligatures=TeX
+sansfontoptions: Ligatures=TeX,Scale=MatchLowercase
+monofontoptions: Scale=MatchLowercase,Scale=0.9
+## Biblatex
+biblatex: true
+biblio-style: "gost-numeric"
+biblatexoptions:
+  - parentracker=true
+  - backend=biber
+  - hyperref=auto
+  - language=auto
+  - autolang=other*
+  - citestyle=gost-numeric
+## Pandoc-crossref LaTeX customization
+figureTitle: "Рис."
+tableTitle: "Таблица"
+listingTitle: "Листинг"
+lofTitle: "Список иллюстраций"
+lotTitle: "Список таблиц"
+lolTitle: "Листинги"
+## Misc options
+indent: true
+header-includes:
+  - \usepackage{indentfirst}
+  - \usepackage{float} # keep figures where there are in the text
+  - \floatplacement{figure}{H} # keep figures where there are in the text
+---
+
+
+# Выполнение лабораторной работы
+
+Burp Suite представляет собой набор мощных инструментов безопасности веб-приложений, которые демонстрируют реальные возможности злоумышленника, проникающего в веб-приложения
+
+![1](image/1.png){#fig:001 width=70%}
+
+Исходные данные:
+
+    IP сервера 178.72.90.181;
+    Сервис http на стандартном 80 порту;
+    Для авторизации используется html форма, которая отправляет по адресу http://178.72.90.181/cgi-bin/luci методом POST запрос вида username=root&password=test_password;
+    В случае не удачной аутентификации пользователь наблюдает сообщение Invalid username and/or password! Please try again.
+
+
+![2](image/3.png){#fig:003 width=70%}
+
+Запрос к Hydra будет выглядеть примерно так:
+
+![3](image/2.png){#fig:002 width=70%}
+
+Используется http-post-form потому, что авторизация происходит по http методом post.
+Пасхальные яйца: раскрытие полных путей, обход аутентификации и некоторые другие.
+
+![4](image/4.png){#fig:004 width=70%}
+
+![5](image/5.png){#fig:005 width=70%}
+
+![6](image/6.png){#fig:006 width=70%}
+
+После указания этого модуля идёт строка /cgi-bin/luci:username=^USER^&password=^PASS^:Invalid username, у которой через двоеточие (:) указывается:
+
+    путь до скрипта, который обрабатывает процесс аутентификации (/cgi-bin/luci);
+
+![7](image/7.png){#fig:007 width=70%}
+
+![8](image/8.png){#fig:008 width=70%}
+
+строка, которая передаётся методом POST, в которой логин и пароль заменены на ^USER^ и ^PASS^ соответственно (username=^USER^&password=^PASS^);
+строка, которая присутствует на странице при неудачной аутентификации; при её отсутствии Hydra поймёт, что мы успешно вошли (Invalid username
+
+![9](image/9.png){#fig:009 width=70%}
+
+![10](image/10.png){#fig:010 width=70%}
+
+# Выводы
+
+Я научился использовать Hydra
+
+::: {#refs}
+:::
