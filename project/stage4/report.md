@@ -3,7 +3,7 @@
 ## Front matter
 title: "Индивидуальный проект"
 subtitle: "Этап 4. Использование nikto"
-author: "Хватов Максим Григорьевич"
+author: "Джахангиров Илгар"
 
 ## Generic otions
 lang: ru-RU

@@ -3,7 +3,7 @@
 ## Front matter
 title: "Лабораторная работа №6"
 subtitle: "Мандатное разграничение прав в Linux"
-author: "Хватов Максим"
+author: "Джахангиров Илгар"
 
 ## Generic otions
 lang: ru-RU
